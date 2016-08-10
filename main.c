@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define BUFFER 10
+#define BUFFER 80
 
 typedef struct Word {
   int n;
@@ -28,21 +28,12 @@ int main(void)
 
 	while (fgets(line,BUFFER,stdin) != NULL)
 	{
-		printf("line:\t%s\n", line);
 		word->str = strtok(line, " ");
-		printf("strtok:\t%s\n", word->str);
-		word->str = strtok(line, " ");
-		printf("strtok:\t%s\n", word->str);
-		word->str = strtok(line, " ");
-		printf("strtok:\t%s\n", word->str);
-
-		/* while (word->str != NULL) */
-		/* { */
-		/* 	word->next = malloc(sizeof(Word)); */
-		/* 	word->str = strtok(line, " "); */
-		/* 	word->n = 0; */
-		/* 	printf("------1-------\n"); */
-		/* } */
+		while (word->str != NULL)
+		{
+			printf("word:\t%s\n", word->str);
+			word->str = strtok(NULL, " ");
+		}
 	}
 
 	/* free(word); */
