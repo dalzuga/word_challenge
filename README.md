@@ -1,0 +1,1 @@
+# scality_challenge
