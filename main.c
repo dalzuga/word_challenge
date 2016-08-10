@@ -4,11 +4,11 @@
 
 #define BUFFER 80
 
-typedef struct Word {
+typedef struct WordList {
   int n;
   const char *str;
-  struct Word *next;
-} Word;
+  struct WordList *next;
+} WordList;
 
 /**
   * this program takes input from stdin, counts each word,
@@ -17,26 +17,43 @@ typedef struct Word {
 
 int main(void)
 {
-	Word *word;
+	WordList *first_word;
+	WordList *word;
 	char line[BUFFER];
 
-	word = malloc(sizeof(Word));
+	word = malloc(sizeof(WordList));
+	first_word = word;
 
 	word->n = 0;
 	word->str = NULL;
 	word->next = NULL;
 
+	/* stores words in a Wordlist using strtok */
 	while (fgets(line,BUFFER,stdin) != NULL)
 	{
 		word->str = strtok(line, " ");
 		while (word->str != NULL)
 		{
-			printf("word:\t%s\n", word->str);
+			word->next = malloc(sizeof(WordList));
+			word = word->next;
+			word->n = 0;
+			word->next = NULL;
 			word->str = strtok(NULL, " ");
 		}
 	}
 
-	/* free(word); */
+	word = first_word;
+
+	/* prints */
+	while (word->next != NULL)
+	{
+		printf("%s\n", word->str);
+		word = word->next;
+	}
+
+	word = first_word;
+
+	free(first_word);
 
 	return 0;
 }
