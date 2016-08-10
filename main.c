@@ -6,7 +6,7 @@
 
 typedef struct WordList {
   int n;
-  const char *str;
+  char *str;
   struct WordList *next;
 } WordList;
 
@@ -29,17 +29,17 @@ int main(void)
 	word->next = NULL;
 
 	/* stores words in a Wordlist using strtok */
-	while (fgets(line,BUFFER,stdin) != NULL)
+	if (fgets(line,BUFFER,stdin) == NULL)
+	    return 1;
+	word->str = strtok(line, "\n"); /* strips the new line */
+	word->str = strtok(line, " ");
+	while (word->str != NULL)
 	{
-		word->str = strtok(line, " ");
-		while (word->str != NULL)
-		{
-			word->next = malloc(sizeof(WordList));
-			word = word->next;
-			word->n = 0;
-			word->next = NULL;
-			word->str = strtok(NULL, " ");
-		}
+		word->next = malloc(sizeof(WordList));
+		word = word->next;
+		word->n = 0;
+		word->next = NULL;
+		word->str = strtok(NULL, " ");
 	}
 
 	word = first_word;
