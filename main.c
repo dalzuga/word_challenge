@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #define BUFFER 80
 
@@ -17,43 +18,40 @@ typedef struct WordList {
 
 int main(void)
 {
-	WordList *first_word;
-	WordList *word;
-	char line[BUFFER];
+	/* WordList *word; */
+	char c = '\0';
+	char buf[BUFFER] = "";
+	char *str;
+	int i = 0, n = 0;
 
-	word = malloc(sizeof(WordList));
-	first_word = word;
-
-	word->n = 0;
-	word->str = NULL;
-	word->next = NULL;
-
-	/* stores words in a Wordlist using strtok */
-	if (fgets(line,BUFFER,stdin) == NULL)
-	    return 1;
-	word->str = strtok(line, "\n"); /* strips the new line */
-	word->str = strtok(line, " ");
-	while (word->str != NULL)
+	while (c != EOF)
 	{
-		word->next = malloc(sizeof(WordList));
-		word = word->next;
-		word->n = 0;
-		word->next = NULL;
-		word->str = strtok(NULL, " ");
+		i = 0;
+		/* while (read(STDIN_FILENO,buf,BUFFER)) */
+		while ((c = getc(stdin)) != EOF)
+		{
+			if (c == ' ' || c == '\n')
+				break;
+			buf[i] = c;
+			i++;
+		}
+
+		if (c == EOF)
+			break;
+
+		n = i + 1;
+		/* printf("n is:\t%d\n", n); */
+		str = malloc(n);
+		strncpy(str, buf, n);
+
+		/* for (i = 0; i < n; i++) */
+		/* { */
+		/* 	printf("str[%d] is:\t%c\n", i, str[i]); */
+		/* } */
+
+		printf("%s\n", str);
+		memset(buf, '\0', n); /* clear the buffer */
 	}
-
-	word = first_word;
-
-	/* prints */
-	while (word->next != NULL)
-	{
-		printf("%s\n", word->str);
-		word = word->next;
-	}
-
-	word = first_word;
-
-	free(first_word);
-
+	
 	return 0;
 }
