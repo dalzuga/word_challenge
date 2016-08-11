@@ -17,20 +17,22 @@ typedef struct WordList {
  */
 
 WordList *find_word(WordList *first_node, char *s);
+void print_wordlist(WordList *first_node);
 
 int main(void)
 {
-	WordList *word, *first_node;
+	WordList *word, *first_node, *tmp_word;
 	char c = '\0';
 	char buf[BUFFER] = "";
-	/* char *str; */
-	int i = 0, n = 0;
+	char *str;
+	int i = 0, n;
 
 	word = malloc(sizeof(WordList));
 	word->str = NULL;
 	word->next = NULL;
-	word->n = 0;
+	word->n = 1;
 	first_node = word;
+	tmp_word = NULL;
 
 	while (c != EOF)
 	{
@@ -48,41 +50,34 @@ int main(void)
 			break;
 
 		n = i + 1;
-		/* printf("n is:\t%d\n", n); */
-		word->str = malloc(n);
-		strncpy(word->str, buf, n);
 
-		/* for (i = 0; i < n; i++) */
-		/* { */
-		/* 	printf("str[%d] is:\t%c\n", i, str[i]); */
-		/* } */
+		str = malloc(n);
+		strncpy(str, buf, n);
 
-		/* printf("%s\n", word->str); */
+		if ((tmp_word = find_word(first_node, str)) == NULL)
+		{
+			word->str = str;
+			word->next = malloc(sizeof(WordList));
+			word = word->next;
+			word->str = NULL;
+			word->next = NULL;
+			word->n = 1;
+		}
+		else
+			(tmp_word->n)++;
+
 		memset(buf, '\0', n); /* clear the buffer */
-
-		word->next = malloc(sizeof(WordList));
-		word = word->next;
-		word->str = NULL;
-		word->next = NULL;
-		word->n = 0;
 	}
 	
-	/* /\* prints *\/ */
-	/* word = first_node; */
-
-	/* while (word->next != NULL) */
-	/* { */
-	/* 	printf("%s\n", word->str); */
-	/* 	word = word->next; */
-	/* } */
+	print_wordlist(first_node);
 
 	/* find the word */
-	word = find_word(first_node, "hi");
+	/* word = find_word(first_node, "hi"); */
 
-	if (word == NULL)
-		printf("Word not found\n");
-	else
-		printf("The word \"%s\" was found.\n", word->str);
+	/* if (word == NULL) */
+	/* 	printf("Word not found\n"); */
+	/* else */
+	/* 	printf("The word \"%s\" was found.\n", word->str); */
 
 	return 0;
 }
@@ -104,6 +99,8 @@ WordList *find_word(WordList *first_node, char *s)
 			return NULL;
 		}
 
+		/* printf("%s\n", word_ptr->str); */
+
 		if (strcmp(word_ptr->str, s) == 0)
 			return word_ptr;
 
@@ -111,4 +108,17 @@ WordList *find_word(WordList *first_node, char *s)
 	}
 
 	return NULL;
+}
+
+void print_wordlist(WordList *first_node)
+{
+	WordList *word;
+	/* prints */
+	word = first_node;
+
+	while (word->next != NULL)
+	{
+		printf("%d\t%s\n", word->n, word->str);
+		word = word->next;
+	}
 }
