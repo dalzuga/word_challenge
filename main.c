@@ -16,6 +16,8 @@ typedef struct WordList {
   * and displays a sorted list of word frequency
  */
 
+WordList *find_word(WordList *first_node, char *s);
+
 int main(void)
 {
 	WordList *word, *first_node;
@@ -65,16 +67,50 @@ int main(void)
 		word->n = 0;
 	}
 	
-	/* prints */
-	word = first_node;
+	/* /\* prints *\/ */
+	/* word = first_node; */
 
-	while (word->next != NULL)
-	{
-		printf("%s\n", word->str);
-		word = word->next;
-	}
+	/* while (word->next != NULL) */
+	/* { */
+	/* 	printf("%s\n", word->str); */
+	/* 	word = word->next; */
+	/* } */
 
-	free(first_node);
+	/* find the word */
+	word = find_word(first_node, "hi");
+
+	if (word == NULL)
+		printf("Word not found\n");
+	else
+		printf("The word \"%s\" was found.\n", word->str);
 
 	return 0;
+}
+
+/* returns NULL if word does not exist */
+WordList *find_word(WordList *first_node, char *s)
+{
+	WordList *word_ptr;
+	word_ptr = first_node;
+
+	while (word_ptr != NULL)
+	{
+		/* printf("---------------1while---------------\n"); */
+		/* printf("%p\n", (void *) word_ptr); */
+
+		if (word_ptr->str == NULL)
+		{
+			/* printf("---------------2word->str==NULL---------------\n"); */
+			return NULL;
+		}
+
+		printf("%s\n", word_ptr->str);
+
+		if (strcmp(word_ptr->str, s) == 0)
+			return word_ptr;
+
+		word_ptr = word_ptr->next;
+	}
+
+	return NULL;
 }
