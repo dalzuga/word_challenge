@@ -18,11 +18,13 @@ typedef struct WordList {
 
 int main(void)
 {
-	/* WordList *word; */
+	WordList *word;
 	char c = '\0';
 	char buf[BUFFER] = "";
-	char *str;
+	/* char *str; */
 	int i = 0, n = 0;
+
+	word = malloc(sizeof(WordList));
 
 	while (c != EOF)
 	{
@@ -41,15 +43,15 @@ int main(void)
 
 		n = i + 1;
 		/* printf("n is:\t%d\n", n); */
-		str = malloc(n);
-		strncpy(str, buf, n);
+		word->str = malloc(n);
+		strncpy(word->str, buf, n);
 
 		/* for (i = 0; i < n; i++) */
 		/* { */
 		/* 	printf("str[%d] is:\t%c\n", i, str[i]); */
 		/* } */
 
-		printf("%s\n", str);
+		printf("%s\n", word->str);
 		memset(buf, '\0', n); /* clear the buffer */
 	}
 	
