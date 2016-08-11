@@ -104,8 +104,6 @@ WordList *find_word(WordList *first_node, char *s)
 			return NULL;
 		}
 
-		printf("%s\n", word_ptr->str);
-
 		if (strcmp(word_ptr->str, s) == 0)
 			return word_ptr;
 
