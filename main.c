@@ -18,6 +18,7 @@ typedef struct WordList {
 
 WordList *find_word(WordList *first_node, char *s);
 void print_wordlist(WordList *first_node);
+int compare_word_freq(const void *a, const void *b);
 
 int main(void)
 {
@@ -110,15 +111,81 @@ WordList *find_word(WordList *first_node, char *s)
 	return NULL;
 }
 
+/* prints */
 void print_wordlist(WordList *first_node)
 {
 	WordList *word;
-	/* prints */
+	int i = 0, n;
+	WordList **index = NULL;
+
+	int (*cmp_ptr)(const void *, const void *);
+	cmp_ptr = &compare_word_freq;
+
 	word = first_node;
 
 	while (word->next != NULL)
 	{
+		i++;
+		word = word->next;
+	}
+
+	n = i;
+
+	printf("-----------------print-----------------\n");
+	printf("The number of words is:\t\t%d\n", n);
+
+	index = malloc(sizeof(WordList *) * n);
+
+	printf("Sizeof():\t%lu\n", sizeof(WordList *) * n);
+
+	word = first_node;
+	for (i = 0; word->next != NULL; i++)
+	{
+		index[i] = word;
+		printf("i:\t%d\tindex[%d]:\t%p\t%p\n", i, i, (void *) index[i],( void *) (index[0] + 1));
 		printf("%d\t%s\n", word->n, word->str);
 		word = word->next;
 	}
+
+	printf("------------ordered print--------------\n");
+	printf("The number of words is:\t\t%d\n", n);
+
+	/* qsort(index[0], n, sizeof(WordList*), cmp_ptr); */
+
+	cmp_ptr(index[0], index[1]);
+	cmp_ptr(index[1], index[2]);
+	cmp_ptr(index[2], index[3]);
+	cmp_ptr(index[3], index[4]);
+
+	for (i = 0; i < n; i++)
+	{
+		printf("%d\t%s\n", index[i]->n, index[i]->str);
+	}
+
+	/* for (i = 0; i < n; i++) */
+	/* { */
+	/* 	printf("a[%d] =\t%d\n", i, array_freq[i]); */
+	/* } */
+
+}
+
+int compare_word_freq(const void *a, const void *b)
+{
+	WordList *word_a, *word_b;
+
+	printf("----------Memory addresses----------\n");
+	printf("const void *a:\t%p\n", a);
+	printf("const void *b:\t%p\n", b);
+
+	word_a = (WordList *) a;
+	word_b = (WordList *) b;
+
+	printf("Comparing:\t%s to \t%s\n", word_a->str, word_b->str);
+
+	if (word_a->n < word_b->n)
+		return -1;
+	if (word_a->n == word_b->n)
+		return 0;
+
+	return 1;
 }
