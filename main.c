@@ -116,9 +116,9 @@ void print_wordlist(WordList *first_node)
 {
 	WordList *word;
 	int i = 0, n;
-	WordList **index = NULL;
+	WordList **indexold = NULL;
 
-	int (*cmp_ptr)(const void *, const void *);
+	int __attribute__((unused)) (*cmp_ptr)(const void *, const void *);
 	cmp_ptr = &compare_word_freq;
 
 	word = first_node;
@@ -131,35 +131,35 @@ void print_wordlist(WordList *first_node)
 
 	n = i;
 
-	printf("-----------------print-----------------\n");
-	printf("The number of words is:\t\t%d\n", n);
+	/* printf("-----------------print-----------------\n"); */
+	/* printf("The number of words is:\t\t%d\n", n); */
 
-	index = malloc(sizeof(WordList *) * n);
+	indexold = malloc(sizeof(WordList *) * sizeof(void *) * n);
 
-	printf("Sizeof():\t%lu\n", sizeof(WordList *) * n);
+	/* printf("Sizeof():\t%lu\n", sizeof(WordList *) * n); */
 
 	word = first_node;
 	for (i = 0; word->next != NULL; i++)
 	{
-		index[i] = word;
-		printf("i:\t%d\tindex[%d]:\t%p\t%p\n", i, i, (void *) index[i],( void *) (index[0] + 1));
-		printf("%d\t%s\n", word->n, word->str);
+		indexold[i] = word;
+		/* printf("i:\t%d\tindexold[%d]:\t%p\n", i, i, (void *) indexold[i]); */
+		/* printf("%d\t%s\n", word->n, word->str); */
 		word = word->next;
 	}
 
-	printf("------------ordered print--------------\n");
-	printf("The number of words is:\t\t%d\n", n);
+	/* printf("------------ordered print--------------\n"); */
+	/* printf("The number of words is:\t\t%d\n", n); */
 
-	/* qsort(index[0], n, sizeof(WordList*), cmp_ptr); */
+	/* qsort(indexold[0], n, sizeof(WordList *) * sizeof(void *), cmp_ptr); */
 
-	cmp_ptr(index[0], index[1]);
-	cmp_ptr(index[1], index[2]);
-	cmp_ptr(index[2], index[3]);
-	cmp_ptr(index[3], index[4]);
+	/* cmp_ptr(indexold[0], indexold[1]); */
+	/* cmp_ptr(indexold[1], indexold[2]); */
+	/* cmp_ptr(indexold[2], indexold[3]); */
+	/* cmp_ptr(indexold[3], indexold[4]); */
 
 	for (i = 0; i < n; i++)
 	{
-		printf("%d\t%s\n", index[i]->n, index[i]->str);
+		printf("%d\t%s\n", indexold[i]->n, indexold[i]->str);
 	}
 
 	/* for (i = 0; i < n; i++) */
