@@ -116,7 +116,7 @@ void print_wordlist(WordList *first_node)
 {
 	WordList *word;
 	int i = 0, n;
-	WordList **indexold = NULL;
+	WordList **index = NULL;
 
 	int __attribute__((unused)) (*cmp_ptr)(const void *, const void *);
 	cmp_ptr = &compare_word_freq;
@@ -134,7 +134,7 @@ void print_wordlist(WordList *first_node)
 	/* printf("-----------------print-----------------\n"); */
 	/* printf("The number of words is:\t\t%d\n", n); */
 
-	indexold = malloc(sizeof(WordList *) * sizeof(void *) * n);
+	index = malloc(sizeof(WordList *) * n);
 
 	/* printf("Sizeof():\t%lu\n", sizeof(WordList *) * n); */
 
@@ -142,15 +142,15 @@ void print_wordlist(WordList *first_node)
 	for (i = 0; word->next != NULL; i++)
 	{
 		index[i] = word;
-		printf("i:\t%d\tindex[%d]:\t%p\n", i, i, (void *) index[i]);
+		printf("i:\t%d\t&index[%d]:\t%p\n", i, i, (void *) &(index[i]));
 		printf("%d\t%s\n", word->n, word->str);
 		word = word->next;
 	}
 
-	/* printf("------------ordered print--------------\n"); */
+	printf("------------ordered print--------------\n");
 	/* printf("The number of words is:\t\t%d\n", n); */
 
-	/* qsort(indexold[0], n, sizeof(WordList *) * sizeof(void *), cmp_ptr); */
+	qsort(index, n, sizeof(WordList *), cmp_ptr);
 
 	/* cmp_ptr(index[0], index[1]); */
 	/* cmp_ptr(index[1], index[2]); */
@@ -159,7 +159,7 @@ void print_wordlist(WordList *first_node)
 
 	for (i = 0; i < n; i++)
 	{
-		printf("%d\t%s\n", indexold[i]->n, indexold[i]->str);
+		printf("%d\t%s\n", index[i]->n, index[i]->str);
 	}
 
 	/* for (i = 0; i < n; i++) */
@@ -172,20 +172,24 @@ void print_wordlist(WordList *first_node)
 int compare_word_freq(const void *a, const void *b)
 {
 	WordList *word_a, *word_b;
+	WordList **word_a_dp, **word_b_dp;
+
+	word_a_dp = (WordList **) a;
+	word_b_dp = (WordList **) b;
+
+	word_a = (WordList *) *word_a_dp;
+	word_b = (WordList *) *word_b_dp;
 
 	printf("----------Memory addresses----------\n");
 	printf("const void *a:\t%p\n", a);
 	printf("const void *b:\t%p\n", b);
 
-	word_a = (WordList *) a;
-	word_b = (WordList *) b;
-
 	printf("Comparing:\t%s to \t%s\n", word_a->str, word_b->str);
 
 	if (word_a->n < word_b->n)
-		return -1;
+		return 1;
 	if (word_a->n == word_b->n)
 		return 0;
 
-	return 1;
+	return -1;
 }
