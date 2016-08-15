@@ -38,7 +38,6 @@ int main(void)
 	while (c != EOF)
 	{
 		i = 0;
-		/* while (read(STDIN_FILENO,buf,BUFFER)) */
 		while ((c = getc(stdin)) != EOF)
 		{
 			if (c == ' ' || c == '\n')
@@ -72,18 +71,9 @@ int main(void)
 	
 	print_wordlist(first_node);
 
-	/* find the word */
-	/* word = find_word(first_node, "hi"); */
-
-	/* if (word == NULL) */
-	/* 	printf("Word not found\n"); */
-	/* else */
-	/* 	printf("The word \"%s\" was found.\n", word->str); */
-
 	return 0;
 }
 
-/* returns NULL if word does not exist */
 WordList *find_word(WordList *first_node, char *s)
 {
 	WordList *word_ptr;
@@ -91,16 +81,10 @@ WordList *find_word(WordList *first_node, char *s)
 
 	while (word_ptr != NULL)
 	{
-		/* printf("---------------1while---------------\n"); */
-		/* printf("%p\n", (void *) word_ptr); */
-
 		if (word_ptr->str == NULL)
 		{
-			/* printf("---------------2word->str==NULL---------------\n"); */
 			return NULL;
 		}
-
-		/* printf("%s\n", word_ptr->str); */
 
 		if (strcmp(word_ptr->str, s) == 0)
 			return word_ptr;
@@ -131,60 +115,30 @@ void print_wordlist(WordList *first_node)
 
 	n = i;
 
-	/* printf("-----------------print-----------------\n"); */
-	/* printf("The number of words is:\t\t%d\n", n); */
-
 	index = malloc(sizeof(WordList *) * n);
-
-	/* printf("Sizeof():\t%lu\n", sizeof(WordList *) * n); */
 
 	word = first_node;
 	for (i = 0; word->next != NULL; i++)
 	{
 		index[i] = word;
-		/* printf("i:\t%d\t&index[%d]:\t%p\n", i, i, (void *) &(index[i])); */
-		/* printf("%d\t%s\n", word->n, word->str); */
 		word = word->next;
 	}
 
-	/* printf("------------ordered print--------------\n"); */
-	/* printf("The number of words is:\t\t%d\n", n); */
-
 	qsort(index, n, sizeof(WordList *), cmp_ptr);
-
-	/* cmp_ptr(index[0], index[1]); */
-	/* cmp_ptr(index[1], index[2]); */
-	/* cmp_ptr(index[2], index[3]); */
-	/* cmp_ptr(index[3], index[4]); */
 
 	for (i = 0; i < n; i++)
 	{
 		printf("%d\t%s\n", index[i]->n, index[i]->str);
 	}
 
-	/* for (i = 0; i < n; i++) */
-	/* { */
-	/* 	printf("a[%d] =\t%d\n", i, array_freq[i]); */
-	/* } */
-
 }
 
 int compare_word_freq(const void *a, const void *b)
 {
 	WordList *word_a, *word_b;
-	WordList **word_a_dp, **word_b_dp;
 
-	word_a_dp = (WordList **) a;
-	word_b_dp = (WordList **) b;
-
-	word_a = (WordList *) *word_a_dp;
-	word_b = (WordList *) *word_b_dp;
-
-	/* printf("----------Memory addresses----------\n"); */
-	/* printf("const void *a:\t%p\n", a); */
-	/* printf("const void *b:\t%p\n", b); */
-
-	/* printf("Comparing:\t%s to \t%s\n", word_a->str, word_b->str); */
+	word_a = *((WordList **) a);
+	word_b = *((WordList **) b);
 
 	if (word_a->n < word_b->n)
 		return 1;
