@@ -118,7 +118,7 @@ void print_wordlist(WordList *first_node)
 	int i = 0, n;
 	WordList **index = NULL;
 
-	int __attribute__((unused)) (*cmp_ptr)(const void *, const void *);
+	int (*cmp_ptr)(const void *, const void *);
 	cmp_ptr = &compare_word_freq;
 
 	word = first_node;
@@ -142,12 +142,12 @@ void print_wordlist(WordList *first_node)
 	for (i = 0; word->next != NULL; i++)
 	{
 		index[i] = word;
-		printf("i:\t%d\t&index[%d]:\t%p\n", i, i, (void *) &(index[i]));
-		printf("%d\t%s\n", word->n, word->str);
+		/* printf("i:\t%d\t&index[%d]:\t%p\n", i, i, (void *) &(index[i])); */
+		/* printf("%d\t%s\n", word->n, word->str); */
 		word = word->next;
 	}
 
-	printf("------------ordered print--------------\n");
+	/* printf("------------ordered print--------------\n"); */
 	/* printf("The number of words is:\t\t%d\n", n); */
 
 	qsort(index, n, sizeof(WordList *), cmp_ptr);
@@ -180,11 +180,11 @@ int compare_word_freq(const void *a, const void *b)
 	word_a = (WordList *) *word_a_dp;
 	word_b = (WordList *) *word_b_dp;
 
-	printf("----------Memory addresses----------\n");
-	printf("const void *a:\t%p\n", a);
-	printf("const void *b:\t%p\n", b);
+	/* printf("----------Memory addresses----------\n"); */
+	/* printf("const void *a:\t%p\n", a); */
+	/* printf("const void *b:\t%p\n", b); */
 
-	printf("Comparing:\t%s to \t%s\n", word_a->str, word_b->str);
+	/* printf("Comparing:\t%s to \t%s\n", word_a->str, word_b->str); */
 
 	if (word_a->n < word_b->n)
 		return 1;
