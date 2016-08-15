@@ -141,9 +141,9 @@ void print_wordlist(WordList *first_node)
 	word = first_node;
 	for (i = 0; word->next != NULL; i++)
 	{
-		indexold[i] = word;
-		/* printf("i:\t%d\tindexold[%d]:\t%p\n", i, i, (void *) indexold[i]); */
-		/* printf("%d\t%s\n", word->n, word->str); */
+		index[i] = word;
+		printf("i:\t%d\tindex[%d]:\t%p\n", i, i, (void *) index[i]);
+		printf("%d\t%s\n", word->n, word->str);
 		word = word->next;
 	}
 
@@ -152,10 +152,10 @@ void print_wordlist(WordList *first_node)
 
 	/* qsort(indexold[0], n, sizeof(WordList *) * sizeof(void *), cmp_ptr); */
 
-	/* cmp_ptr(indexold[0], indexold[1]); */
-	/* cmp_ptr(indexold[1], indexold[2]); */
-	/* cmp_ptr(indexold[2], indexold[3]); */
-	/* cmp_ptr(indexold[3], indexold[4]); */
+	/* cmp_ptr(index[0], index[1]); */
+	/* cmp_ptr(index[1], index[2]); */
+	/* cmp_ptr(index[2], index[3]); */
+	/* cmp_ptr(index[3], index[4]); */
 
 	for (i = 0; i < n; i++)
 	{
