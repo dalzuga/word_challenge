@@ -16,7 +16,7 @@ To feed a sample file to it, please use redirection.
 
 * Hash tables with a good hash function can provide better performance
 
-* For readability, might be better to use `read()` or `fgets` to obtain new line, and use `strtok()`
+* For code readability, might be better to use `read()` or `fgets` to obtain new line, and use `strtok()`
   * Disadvantage:
     * Puts a limit on line length (BUFFER - 1)
   * Advantage:
