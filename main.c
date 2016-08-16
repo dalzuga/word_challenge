@@ -38,7 +38,13 @@ int main(void)
 	while (c != EOF)
 	{
 		i = 0;
-		while ((c = getc(stdin)) != EOF)
+		c = getc(stdin);
+		while (c == ' ' || c == '\n' || c == '\t')\
+/* ignore whitespace or new lines or tabs */
+		{
+			c = getc(stdin);
+		}
+		while (c != EOF)
 		{
 			if (i > BUFFER)
 			{
@@ -46,10 +52,12 @@ int main(void)
 Please increase buffer size!\n");
 				return 0;
 			}
-			if (c == ' ' || c == '\n') /* split text by space or newline */
+			if (c == ' ' || c == '\n' || c == '\t')\
+ /* split text by space or newline or tabs */
 				break;
 			buf[i] = c;
 			i++;
+			c = getc(stdin);
 		}
 
 		if (c == EOF)
@@ -60,7 +68,8 @@ Please increase buffer size!\n");
 		str = malloc(n);
 		strncpy(str, buf, n);
 
-		if ((tmp_word = find_word(first_node, str)) == NULL) /* check if new word */
+		if ((tmp_word = find_word(first_node, str)) == NULL)\
+/* check if new word */
 		{
 			word->str = str;
 			word->next = malloc(sizeof(WordList));
