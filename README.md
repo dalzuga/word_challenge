@@ -12,12 +12,12 @@ To feed a sample file to it, please use redirection.
 
 ###To Do
 
-* Memory isn't freed. Should write a function to free the WordList and the index.
+* Memory isn't freed. Should write a function to free the WordList and the index if this is to be used in another program.
 
-* Hash tables with a good hash function can provide better performance
+* Hash tables can provide better performance than a WordList (linear for look-up; potentially linear for sorting, if using a smart hash function that takes frequency into account, and smart resizing to make sure there's enough buckets to keep the table sorted)
 
-* For code readability, might be better to use `read()` or `fgets` to obtain new line, and use `strtok()`
+* For code readability, might be better to use `read()` or `fgets` to obtain an input line, and use `strtok()`
   * Disadvantage:
-    * Puts a limit on line length (BUFFER - 1)
+    * Puts a limit on line length (BUFFER - 1) rather than on word length
   * Advantage:
-    * Built-in function `strtok()` handles delimiters (extra whitespace, new lines, etc) so that there is no need to re-code it / document it
+    * Built-in function `strtok()` handles delimiters (extra whitespace, new lines, etc) so that there is no need to re-code it / document it (faster implementation)
