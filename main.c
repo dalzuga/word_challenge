@@ -40,6 +40,12 @@ int main(void)
 		i = 0;
 		while ((c = getc(stdin)) != EOF)
 		{
+			if (i > BUFFER)
+			{
+				printf("Your words are too long! \
+Please increase buffer size!\n");
+				return 0;
+			}
 			if (c == ' ' || c == '\n') /* split text by space or newline */
 				break;
 			buf[i] = c;
