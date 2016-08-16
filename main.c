@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#define BUFFER 80
+#define BUFFER 80		/* maximum word size */
 
 typedef struct WordList {
   int n;
@@ -40,7 +40,7 @@ int main(void)
 		i = 0;
 		while ((c = getc(stdin)) != EOF)
 		{
-			if (c == ' ' || c == '\n')
+			if (c == ' ' || c == '\n') /* split text by space or newline */
 				break;
 			buf[i] = c;
 			i++;
@@ -54,19 +54,19 @@ int main(void)
 		str = malloc(n);
 		strncpy(str, buf, n);
 
-		if ((tmp_word = find_word(first_node, str)) == NULL)
+		if ((tmp_word = find_word(first_node, str)) == NULL) /* check if new word */
 		{
 			word->str = str;
 			word->next = malloc(sizeof(WordList));
 			word = word->next;
 			word->str = NULL;
 			word->next = NULL;
-			word->n = 1;
+			word->n = 1; /* init count to 1 */
 		}
-		else
-			(tmp_word->n)++;
+		else		/* word exists */
+			(tmp_word->n)++; /* increment the count for this word */
 
-		memset(buf, '\0', n); /* clear the buffer */
+		memset(buf, '\0', n); /* clear the buffer to read next word */
 	}
 	
 	print_wordlist(first_node);
@@ -74,6 +74,7 @@ int main(void)
 	return 0;
 }
 
+/* check if the word exists in the WordList chain */
 WordList *find_word(WordList *first_node, char *s)
 {
 	WordList *word_ptr;
@@ -95,15 +96,15 @@ WordList *find_word(WordList *first_node, char *s)
 	return NULL;
 }
 
-/* prints */
+/* prints all the words in the WordList */
 void print_wordlist(WordList *first_node)
 {
 	WordList *word;
 	int i = 0, n;
 	WordList **index = NULL;
 
-	int (*cmp_ptr)(const void *, const void *);
-	cmp_ptr = &compare_word_freq;
+	int (*cmp_ptr)(const void *, const void *); /* function pointer variable 'cmp' */
+	cmp_ptr = &compare_word_freq;		    /* point to the function */
 
 	word = first_node;
 
@@ -124,15 +125,17 @@ void print_wordlist(WordList *first_node)
 		word = word->next;
 	}
 
-	qsort(index, n, sizeof(WordList *), cmp_ptr);
+	qsort(index, n, sizeof(WordList *), cmp_ptr); /* sorts the words by their frequency */
 
 	for (i = 0; i < n; i++)
 	{
-		printf("%d\t%s\n", index[i]->n, index[i]->str);
+		printf("%d\t%s\n", index[i]->n, index[i]->str); /* prints */
 	}
-
 }
 
+/**
+ * compare function to be used by qsort built-in
+ */
 int compare_word_freq(const void *a, const void *b)
 {
 	WordList *word_a, *word_b;
