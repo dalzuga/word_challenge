@@ -14,7 +14,7 @@ typedef struct WordList {
 /**
   * this program takes input from stdin, counts each word,
   * and displays a sorted list of word frequency
- */
+  */
 
 WordList *find_word(WordList *first_node, char *s);
 void print_wordlist(WordList *first_node);
