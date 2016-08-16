@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#define BUFFER 80		/* maximum word size */
+#define BUFFER 1024		/* maximum word size */
 
 typedef struct WordList {
   int n;
