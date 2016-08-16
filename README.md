@@ -21,4 +21,4 @@ To feed a sample file to it, please use redirection.
     * Puts a limit on line length (BUFFER - 1) rather than on word length
   * Advantage:
     * Built-in function `strtok()` handles delimiters (extra whitespace, new lines, etc) so that there is no need to re-code it / document it (faster implementation)
-* Add functionality to read directly from a file through **argv (command-line arguments)
+* Add functionality to read directly from a file through `**argv` (command-line arguments) in addition to being able to read from `stdin`
