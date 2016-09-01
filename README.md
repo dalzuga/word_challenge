@@ -1,4 +1,4 @@
-# scality_challenge
+# word_challenge
 This program takes input from stdin, counts each word,
 and displays a sorted list of word frequency.
 
